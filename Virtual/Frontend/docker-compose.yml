@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./Virtual/Frontend/journey
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Virtual/Frontend/journey:/app
+      - /app/node_modules  # Avoid overwriting node_modules in container
+    stdin_open: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Useful for live reloading in Docker

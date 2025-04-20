@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: VIRTUAL
+      POSTGRES_USER: masud
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Backend:/app
+    working_dir: /app/MyJourney  # where manage.py is located
+    environment:
+      - POSTGRES_DB=VIRTUAL
+      - POSTGRES_USER=masud
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_HOST=db
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - db
+    command: >
+      sh -c "
+        python manage.py makemigrations &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
+
+  frontend:
+    build:
+      context: ./Frontend/journey
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Frontend/journey:/app
+    working_dir: /app
+    environment:
+      - HOST=0.0.0.0
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    command: npm run dev
+
+volumes:
+  postgres_data:
+

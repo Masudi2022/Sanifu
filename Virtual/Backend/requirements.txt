@@ -1,0 +1,16 @@
+# Django & REST Framework
+Django>=4.0,<5.0
+djangorestframework>=3.14.0
+djangorestframework-simplejwt>=5.2.2
+django-cors-headers>=3.13.0
+
+# Database & Utilities
+pillow
+requests
+nltk
+pytz
+psycopg2>=2.9.0  # For PostgreSQL
+
+# spaCy NLP
+spacy>=3.7.0
+en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl

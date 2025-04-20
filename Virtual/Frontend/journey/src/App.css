@@ -1,0 +1,39 @@
+/* App.css */
+
+/* Ensure that the body and html take up the full height of the viewport */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #0f172a; /* Set your background color */
+  }
+  
+  /* The container for the entire app */
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;  /* Ensures the container takes up the full viewport height */
+  }
+  
+  /* This class will make sure the main content area grows to fill available space */
+  .main-content {
+    flex: 1;
+    padding: 2rem;  /* Adjust padding as needed */
+    background-color: #1e293b; /* Set your background color for the content */
+  }
+  
+  /* Footer styles (ensure footer stays at the bottom) */
+  footer {
+    background-color: #111827; /* Change to your preferred footer color */
+    padding: 1rem 0;
+    color: #f8fafc;
+    text-align: center;
+  }
+  
+  /* Additional adjustments for the navbar if needed */
+  .navbar {
+    background-color: #1e293b; /* Set navbar color */
+    padding: 1rem 0;
+  }
+  
+  

@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./MyJourney
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./MyJourney:/app
+    working_dir: /app
+    command: >
+      sh -c "
+        python manage.py makemigrations &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
+    
+  frontend:
+    build: ./Frontend/journey
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./Frontend/journey:/app
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    command: npm run dev
+

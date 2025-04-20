@@ -1,0 +1,42 @@
+/* src/components/LandingPage.css */
+
+.landing-page {
+    background: linear-gradient(to right, #0f172a, #1e293b);
+    color: white;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .custom-navbar {
+    background-color: transparent;
+    padding: 1rem 0;
+  }
+  
+  .hero-section {
+    padding: 80px 0;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+  
+  .hero-title .highlight {
+    text-decoration: underline;
+    color: #3b82f6;
+  }
+  
+  .hero-description {
+    color: #cbd5e1;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    max-width: 600px;
+  }
+  
+  .hero-image {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    max-height: 450px;
+    object-fit: cover;
+  }
+  
