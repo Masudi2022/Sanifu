@@ -4,77 +4,72 @@ import string
 from spacy.matcher import PhraseMatcher
 from .faq_data import faq_data
 from .responses import responses
+from difflib import SequenceMatcher
 
-# Load medium model with vectors
+# Load spaCy model once
 nlp = spacy.load("en_core_web_md")
 
-def clean_input(text):
-    text = text.lower().translate(str.maketrans('', '', string.punctuation))
-    return " ".join(text.split())  # Normalize spaces
+# Thresholds
+SIMILARITY_THRESHOLD = 0.75
+FUZZY_THRESHOLD = 0.6
 
-# PhraseMatcher setup
+# Clean input: lowercase, strip punctuation, normalize spaces
+def clean_input(text):
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    return " ".join(text.lower().strip().split())
+
+# Initialize PhraseMatcher
 phrase_matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+
+# Prepare intent vectors and add phrase patterns
+intent_vectors = {}
+intent_examples = {}  # Keep raw examples for fuzzy matching
+
 for intent, examples in faq_data.items():
-    patterns = [nlp.make_doc(clean_input(example)) for example in examples]
-    phrase_matcher.add(intent, patterns)
+    cleaned_examples = [clean_input(ex) for ex in examples]
+    docs = list(nlp.pipe(cleaned_examples))
+    phrase_matcher.add(intent, docs)
+    intent_examples[intent] = cleaned_examples
+
+    # Vector centroid
+    if docs:
+        avg_vector = sum(doc.vector for doc in docs) / len(docs)
+        intent_vectors[intent] = avg_vector
+
+# Fuzzy string similarity
+def fuzzy_similarity(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
 def get_intent(user_input):
-    doc = nlp(clean_input(user_input))
+    cleaned_input = clean_input(user_input)
+    doc = nlp(cleaned_input)
 
-    # Rule-based: PhraseMatcher
+    scores = {}
+
+    # 1. Phrase Matcher (Exact phrase match)
     matches = phrase_matcher(doc)
-    if matches:
-        match_scores = {}
-        for match_id, start, end in matches:
-            intent = nlp.vocab.strings[match_id]
-            span_len = end - start
-            confidence = span_len / len(doc)  # normalize match confidence
-            if confidence > 0.6:  # only count strong matches
-                match_scores[intent] = max(match_scores.get(intent, 0), confidence)
-        if match_scores:
-            return max(match_scores, key=match_scores.get)
+    for match_id, start, end in matches:
+        intent = nlp.vocab.strings[match_id]
+        match_length = end - start
+        scores[intent] = scores.get(intent, 0) + (match_length * 2)  # higher weight
 
-    # Fallback: Vector similarity
-    similarity_scores = {}
-    for intent, examples in faq_data.items():
-        for example in examples:
-            example_doc = nlp(clean_input(example))
-            similarity = doc.similarity(example_doc)
-            similarity_scores[intent] = max(similarity_scores.get(intent, 0), similarity)
+    # 2. Semantic Similarity
+    for intent, vector in intent_vectors.items():
+        similarity = doc.vector_norm and doc.similarity(vector) or 0
+        if similarity >= SIMILARITY_THRESHOLD:
+            scores[intent] = scores.get(intent, 0) + (similarity * 1.5)
 
-    best_match = max(similarity_scores, key=similarity_scores.get)
-    return best_match if similarity_scores[best_match] > 0.78 else "unknown"
+    # 3. Fuzzy Matching on examples
+    for intent, examples in intent_examples.items():
+        best_fuzzy = max(fuzzy_similarity(cleaned_input, ex) for ex in examples)
+        if best_fuzzy >= FUZZY_THRESHOLD:
+            scores[intent] = scores.get(intent, 0) + best_fuzzy
+
+    # Return best intent or unknown
+    if scores:
+        return max(scores, key=scores.get)
+    return "unknown"
 
 def get_response(user_input):
     intent = get_intent(user_input)
     return random.choice(responses.get(intent, responses["unknown"]))
-
-
-# import spacy
-# import random
-# import string
-# from .faq_data import faq_data
-# from .responses import responses
-
-# nlp = spacy.load("en_core_web_md")
-
-# def clean_input(text):
-#     return text.translate(str.maketrans('', '', string.punctuation)).lower()
-
-# def get_intent(user_input):
-#     user_doc = nlp(clean_input(user_input))
-#     scores = {}
-
-#     for intent, examples in faq_data.items():
-#         for example in examples:
-#             example_doc = nlp(clean_input(example))
-#             similarity = user_doc.similarity(example_doc)
-#             scores[intent] = max(scores.get(intent, 0), similarity)
-
-#     best_match = max(scores, key=scores.get)
-#     return best_match if scores[best_match] > 0.70 else "unknown"
-
-# def get_response(user_input):
-#     intent = get_intent(user_input)
-#     return random.choice(responses.get(intent, responses["unknown"]))
-
