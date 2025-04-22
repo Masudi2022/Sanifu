@@ -25,8 +25,8 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
-# Copy application code and change ownership to appuser
-COPY --chown=appuser:appuser . .
+# ✅ KEY CHANGE: Copy your Django project (where manage.py + MyJourney folder is)
+COPY --chown=appuser:appuser ./Virtual/Backend/MyJourney/ .
 
 # Set environment variables for Python
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -37,5 +37,5 @@ USER appuser
 # Expose port 8000 for the backend application
 EXPOSE 8000
 
-# Command to run the application using Gunicorn
+# Run Gunicorn server
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "MyJourney.wsgi:application"]
