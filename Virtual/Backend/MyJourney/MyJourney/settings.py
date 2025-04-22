@@ -1,8 +1,10 @@
 from pathlib import Path
 import os
 from decouple import config, Csv
-from dotenv import load_dotenv
-load_dotenv()
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -13,9 +15,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
 
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
 
 
 if DEBUG:

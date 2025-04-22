@@ -19,5 +19,6 @@ en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_
 gunicorn>=20.1.0  
 python-decouple>=3.6
 dj-database-url
+django-environ
 
 
