@@ -38,4 +38,4 @@ USER appuser
 EXPOSE 8000
 
 # Command to run the application using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "MyJourney.MyJourney.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "MyJourney.wsgi:application"]

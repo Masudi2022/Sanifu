@@ -3,7 +3,7 @@ services:
     name: sanifu-backend
     env: docker
     repo: https://github.com/Masudi2022/Sanifu
-    dockerContext: ./Virtual
+    dockerContext: ./Virtual/Backend/Myjourney   # This is where manage.py is
     dockerfilePath: ./Virtual/Backend/Dockerfile
     plan: free
     envVars:
@@ -18,7 +18,7 @@ services:
       - key: DJANGO_CORS_ALLOWED
         value: http://localhost:5173
 
-      # Updated Render PostgreSQL values
+      # PostgreSQL values from Render
       - key: DATABASE_ENGINE
         value: django.db.backends.postgresql
       - key: DATABASE_NAME
@@ -31,3 +31,5 @@ services:
         value: dpg-d03tt37gi27c738d6hp0-a
       - key: DATABASE_PORT
         value: 5432
+      - key: DJANGO_SETTINGS_MODULE
+        value: MyJourney.settings
