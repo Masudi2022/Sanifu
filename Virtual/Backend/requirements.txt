@@ -9,8 +9,13 @@ pillow
 requests
 nltk
 pytz
-psycopg2>=2.9.0  # For PostgreSQL
+psycopg2-binary>=2.9.0  # For PostgreSQL
 
 # spaCy NLP
 spacy>=3.7.0
 en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl
+
+
+gunicorn>=20.1.0  
+python-decouple>=3.6
+

@@ -3,39 +3,45 @@ version: '3.9'
 services:
   db:
     image: postgres:15
-    restart: always
     ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_DB: VIRTUAL
-      POSTGRES_USER: masud
-      POSTGRES_PASSWORD: 1234
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    env_file:
+      - .env
 
   backend:
     build:
       context: ./Backend
       dockerfile: Dockerfile
+    container_name: django-backend
     ports:
       - "8000:8000"
     volumes:
       - ./Backend:/app
-    working_dir: /app/MyJourney  # where manage.py is located
-    environment:
-      - POSTGRES_DB=VIRTUAL
-      - POSTGRES_USER=masud
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_HOST=db
-      - PYTHONUNBUFFERED=1
+      - static_volume:/app/staticfiles
+    working_dir: /app/MyJourney
     depends_on:
       - db
-    command: >
-      sh -c "
-        python manage.py makemigrations &&
-        python manage.py migrate &&
-        python manage.py runserver 0.0.0.0:8000
-      "
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DEBUG: ${DEBUG}
+      DJANGO_LOGLEVEL: ${DJANGO_LOGLEVEL}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DATABASE_ENGINE: ${DATABASE_ENGINE}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DJANGO_CORS_ALLOWED: ${DJANGO_CORS_ALLOWED}
+    env_file:
+      - .env
+    command: gunicorn --bind 0.0.0.0:8000 MyJourney.wsgi:application
 
   frontend:
     build:
@@ -56,4 +62,4 @@ services:
 
 volumes:
   postgres_data:
-
+  static_volume:
