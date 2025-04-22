@@ -5,6 +5,8 @@ import environ
 
 env = environ.Env()
 environ.Env.read_env()
+import environ
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,7 +19,10 @@ CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', cast=Csv())
+
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+
 
 print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
