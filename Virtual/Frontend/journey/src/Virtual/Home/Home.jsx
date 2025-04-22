@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import heroImage from '../../assets/heroImage.jpg';
+import masud from '../../assets/masudi.png';
 import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiCode, FiCloud, FiDatabase, FiLayers } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaJava, FaPython } from 'react-icons/fa';
 import { SiMongodb, SiFirebase, SiTailwindcss } from 'react-icons/si';
@@ -52,25 +52,7 @@ function Home() {
       fontFamily: "'Inter', sans-serif",
       overflowX: 'hidden'
     }}>
-      {/* Navigation */}
-      {/* <nav className="py-3 px-4" style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
-        background: 'rgba(15, 23, 42, 0.8)',
-        backdropFilter: 'blur(10px)'
-      }}>
-        <Container className="d-flex justify-content-between align-items-center">
-          <Link to="/" className="text-decoration-none">
-            <span style={{ 
-              color: '#00f5d4', 
-              fontWeight: 'bold', 
-              fontSize: '1.5rem',
-              letterSpacing: '1px'
-            }}>MASUD</span>
-          </Link>
-        </Container>
-      </nav> */}
+     
 
       {/* Hero Section */}
       <section className="hero-section" style={{ padding: '6rem 0' }}>
@@ -153,24 +135,27 @@ function Home() {
                 position: 'relative',
                 borderRadius: '16px',
                 overflow: 'hidden',
+               
                 boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
               }}>
-                <img
-                  src={heroImage}
-                  alt="Masud Salum - Student Developer"
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    display: 'block',
-                    transition: 'transform 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/600x400?text=Masud+Salum';
-                  }}
-                />
+              <img
+                src={masud}
+                alt="Masud Salum - Student Developer"
+                style={{
+                  width: '80%',
+                  height: 'auto',
+                  display: 'block',
+                  marginLeft: 'auto', // Pushes the image to the right
+                  transition: 'transform 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/600x400?text=Masud+Salum';
+                }}
+              />
+
                 <div style={{
                   position: 'absolute',
                   bottom: 0,
@@ -178,7 +163,8 @@ function Home() {
                   right: 0,
                   background: 'linear-gradient(transparent, rgba(0, 0, 0, 0.7))',
                   padding: '1.5rem',
-                  color: 'white'
+                  color: 'white',
+                  textAlign: 'center'
                 }}>
                   <h3 style={{ margin: 0 }}>Masud Salum</h3>
                   <p style={{ margin: 0, color: '#00f5d4' }}>IT Student & Developer</p>
