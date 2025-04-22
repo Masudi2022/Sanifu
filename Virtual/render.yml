@@ -3,7 +3,7 @@ services:
     name: sanifu-backend
     env: docker
     repo: https://github.com/Masudi2022/Sanifu
-    dockerContext: ./Virtual/Backend/Myjourney   # This is where manage.py is
+    dockerContext: ./Virtual/Backend/MyJourney     # Corrected path (this folder contains the manage.py file)
     dockerfilePath: ./Virtual/Backend/Dockerfile
     plan: free
     envVars:
@@ -31,5 +31,7 @@ services:
         value: dpg-d03tt37gi27c738d6hp0-a
       - key: DATABASE_PORT
         value: 5432
+
+      # Set the correct Django settings module
       - key: DJANGO_SETTINGS_MODULE
         value: MyJourney.settings
