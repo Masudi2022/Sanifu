@@ -3,10 +3,11 @@ services:
     name: sanifu-backend
     env: docker
     repo: https://github.com/Masudi2022/Sanifu
-    dockerContext: ./Virtual/Backend/MyJourney     # Corrected path (this folder contains the manage.py file)
+    dockerContext: ./Virtual/Backend/MyJourney     # Path to where manage.py lives
     dockerfilePath: ./Virtual/Backend/Dockerfile
     plan: free
     envVars:
+      # Django settings
       - key: DJANGO_SECRET_KEY
         value: django-insecure--$bb+=r3(^+^&tl6mp+*zc$hc4dkq6$+w)o1j5^#cb!_(outi$
       - key: DEBUG
@@ -14,11 +15,11 @@ services:
       - key: DJANGO_LOGLEVEL
         value: info
       - key: DJANGO_ALLOWED_HOSTS
-        value: sanifu-backend.onrender.com
+        value: sanifu.onrender.com,localhost,127.0.0.1,0.0.0.0
       - key: DJANGO_CORS_ALLOWED
         value: http://localhost:5173
 
-      # PostgreSQL values from Render
+      # PostgreSQL settings
       - key: DATABASE_ENGINE
         value: django.db.backends.postgresql
       - key: DATABASE_NAME
@@ -31,7 +32,9 @@ services:
         value: dpg-d03tt37gi27c738d6hp0-a
       - key: DATABASE_PORT
         value: 5432
+      - key: DATABASE_URL
+        value: postgresql://masud_sanifu:97LDj0rmgCH8pncUj6iPOKKjWa8M3iV3@dpg-d03tt37gi27c738d6hp0-a.frankfurt-postgres.render.com/sanifu_db
 
-      # Set the correct Django settings module
+      # Django settings module
       - key: DJANGO_SETTINGS_MODULE
         value: MyJourney.settings
