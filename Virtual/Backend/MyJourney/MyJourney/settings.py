@@ -6,6 +6,7 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 import environ
+import dj_database_url
 
 
 
@@ -17,8 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
 
 
-SECRET_KEY = env('DJANGO_SECRET_KEY')
-DEBUG = env.bool('DEBUG', default=False)
+SECRET_KEY = config('DJANGO_SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', cast=Csv())
 
 print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
@@ -94,13 +95,9 @@ WSGI_APPLICATION = 'MyJourney.wsgi.application'
 
 # Database
 
-import dj_database_url
-
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
-
-
 # # Caching
 # CACHES = {
 #     'default': {
