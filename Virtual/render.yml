@@ -18,17 +18,16 @@ services:
       - key: DJANGO_CORS_ALLOWED
         value: http://localhost:5173
 
-      # You can later replace these with actual Render DB values
+      # Updated Render PostgreSQL values
       - key: DATABASE_ENGINE
         value: django.db.backends.postgresql
       - key: DATABASE_NAME
-        value: VIRTUAL
+        value: sanifu_db
       - key: DATABASE_USERNAME
-        value: masud
+        value: masud_sanifu
       - key: DATABASE_PASSWORD
-        value: 1234
+        value: 97LDj0rmgCH8pncUj6iPOKKjWa8M3iV3
       - key: DATABASE_HOST
-        value: db
+        value: dpg-d03tt37gi27c738d6hp0-a
       - key: DATABASE_PORT
         value: 5432
-
