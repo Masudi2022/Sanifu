@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: sanifu-backend
+    env: docker
+    repo: https://github.com/Masudi2022/Sanifu
+    dockerContext: ./Virtual
+    dockerfilePath: ./Virtual/Backend/Dockerfile
+    plan: free
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: django-insecure--$bb+=r3(^+^&tl6mp+*zc$hc4dkq6$+w)o1j5^#cb!_(outi$
+      - key: DEBUG
+        value: False
+      - key: DJANGO_LOGLEVEL
+        value: info
+      - key: DJANGO_ALLOWED_HOSTS
+        value: sanifu-backend.onrender.com
+      - key: DJANGO_CORS_ALLOWED
+        value: http://localhost:5173
+
+      # You can later replace these with actual Render DB values
+      - key: DATABASE_ENGINE
+        value: django.db.backends.postgresql
+      - key: DATABASE_NAME
+        value: VIRTUAL
+      - key: DATABASE_USERNAME
+        value: masud
+      - key: DATABASE_PASSWORD
+        value: 1234
+      - key: DATABASE_HOST
+        value: db
+      - key: DATABASE_PORT
+        value: 5432
+
