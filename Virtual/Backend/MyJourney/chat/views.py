@@ -41,9 +41,13 @@ def chat_history(request, session_id):
 
 @api_view(['GET'])
 def chat_knowledge(request):
-    knowledge = ChatKnowledge.objects.all()
-    serializer = ChatKnowledgeSerializer(knowledge, many=True)
-    return Response(serializer.data)
+    try:
+        # Your code here
+        return Response({"message": "Knowledge data returned"})
+    except Exception as e:
+        print("Error in chat_knowledge:", e)
+        return Response({"error": str(e)}, status=500)
+
 
 
 

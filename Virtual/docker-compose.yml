@@ -41,7 +41,8 @@ services:
       DJANGO_CORS_ALLOWED: ${DJANGO_CORS_ALLOWED}
     env_file:
       - .env
-    command: gunicorn --chdir MyJourney --bind 0.0.0.0:8000 MyJourney.wsgi:application
+    command: ./entrypoint.sh
+
 
   frontend:
     build:
