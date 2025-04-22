@@ -19,6 +19,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
 
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+
+
 
 if DEBUG:
     INTERNAL_IPS = ['127.0.0.1', 'localhost', '0.0.0.1']  # '0.0.0.8000' should be '0.0.0.1' or 'localhost'
