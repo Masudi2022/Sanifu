@@ -6,7 +6,7 @@ from decouple import config, Csv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+
 CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
 
 
@@ -16,7 +16,7 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
 
 if DEBUG:
-    INTERNAL_IPS = ['127.0.0.1', 'localhost', '0.0.0.8000']
+    INTERNAL_IPS = ['127.0.0.1', 'localhost', '0.0.0.1']  # '0.0.0.8000' should be '0.0.0.1' or 'localhost'
 
 
 
