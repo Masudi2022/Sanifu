@@ -18,27 +18,22 @@ RUN useradd -m -r appuser && \
 
 WORKDIR /app
 
-# Copy Python packages from builder
+# Copy Python dependencies
 COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
-# Copy app code
-COPY --chown=appuser:appuser . .
-
-# Make entrypoint executable
+# Copy project files into /app/MyJourney
+COPY --chown=appuser:appuser MyJourney /app/MyJourney
 COPY --chown=appuser:appuser entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Environment
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 USER appuser
 
-# Set working directory inside the project
 WORKDIR /app/MyJourney
 
 EXPOSE 8000
 
-# Start the app via entrypoint
-CMD ["./entrypoint.sh"]
+CMD ["./../entrypoint.sh"]
