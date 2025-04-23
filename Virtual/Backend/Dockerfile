@@ -35,5 +35,8 @@ USER appuser
 
 EXPOSE 8000
 
+# Set working directory to the MyJourney folder where manage.py is located
+WORKDIR /app/MyJourney
+
 # Use the entrypoint script to run migrations and Gunicorn
 CMD ["./entrypoint.sh"]
