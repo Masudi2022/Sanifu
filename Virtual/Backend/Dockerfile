@@ -18,10 +18,16 @@ RUN useradd -m -r appuser && \
 
 WORKDIR /app
 
+# Copy dependencies from the builder stage
 COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 COPY --chown=appuser:appuser . .
 
+# Copy entrypoint.sh into the container and make it executable
+COPY --chown=appuser:appuser entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
@@ -29,4 +35,5 @@ USER appuser
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--chdir", "MyJourney", "--bind", "0.0.0.0:8000", "MyJourney.wsgi:application"]
+# Use the entrypoint script to run migrations and Gunicorn
+CMD ["./entrypoint.sh"]
