@@ -18,25 +18,27 @@ RUN useradd -m -r appuser && \
 
 WORKDIR /app
 
-# Copy dependencies from the builder stage
+# Copy Python packages from builder
 COPY --from=builder /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
+
+# Copy app code
 COPY --chown=appuser:appuser . .
 
-# Copy entrypoint.sh into the container and make it executable
+# Make entrypoint executable
 COPY --chown=appuser:appuser entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Environment variables
+# Environment
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 USER appuser
 
-EXPOSE 8000
-
-# Set working directory to the MyJourney folder where manage.py is located
+# Set working directory inside the project
 WORKDIR /app/MyJourney
 
-# Use the entrypoint script to run migrations and Gunicorn
+EXPOSE 8000
+
+# Start the app via entrypoint
 CMD ["./entrypoint.sh"]

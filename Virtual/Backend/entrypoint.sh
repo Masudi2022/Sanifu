@@ -10,4 +10,4 @@ echo "🛠️  Running migrations..."
 python manage.py migrate
 
 echo "🚀 Starting Gunicorn..."
-gunicorn --chdir MyJourney --bind 0.0.0.0:8000 MyJourney.wsgi:application
+gunicorn --bind 0.0.0.0:8000 MyJourney.wsgi:application
