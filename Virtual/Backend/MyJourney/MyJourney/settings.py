@@ -15,17 +15,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 
-CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
-
 
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='127.0.0.1,localhost', cast=Csv())
+CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
 
+
+
+print("DEBUG:", DEBUG)
 print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
 
 
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+
 
 
 
