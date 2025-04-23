@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import masud from '../../assets/masudi.png';
+import masud from '../../assets/masudi1.png';
 import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiCode, FiCloud, FiDatabase, FiLayers } from 'react-icons/fi';
 import { FaReact, FaNodeJs, FaJava, FaPython } from 'react-icons/fa';
 import { SiMongodb, SiFirebase, SiTailwindcss } from 'react-icons/si';
