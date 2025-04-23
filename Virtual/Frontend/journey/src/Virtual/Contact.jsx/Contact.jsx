@@ -25,7 +25,7 @@ import { SiGmail } from 'react-icons/si';
 import axios from 'axios';
 import './Contact.css';
 
-const API_ENDPOINT = 'http://127.0.0.1:8000/api/feedback/';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/feedaback/`;
 
 const Contact = () => {
   const [formData, setFormData] = useState({

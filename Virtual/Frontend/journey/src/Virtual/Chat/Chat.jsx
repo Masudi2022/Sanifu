@@ -4,7 +4,8 @@ import { FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/chat/';
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/chat/`;
+
 
 function Chat() {
   const [messages, setMessages] = useState([]);
