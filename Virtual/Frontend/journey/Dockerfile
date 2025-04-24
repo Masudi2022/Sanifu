@@ -1,20 +1,29 @@
-# Use an official Node.js base image
-FROM node:18
+# ---------- Build Stage ----------
+    FROM node:18 AS builder
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json first for dependency install
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of your frontend source code
-COPY . .
-
-# Expose Vite's default development port
-EXPOSE 5173
-
-# Run the Vite development server
-CMD ["npm", "run", "dev"]
+    WORKDIR /app
+    
+    # Install dependencies
+    COPY package*.json ./
+    RUN npm install
+    
+    # Copy source and .env
+    COPY . .
+    
+    # Build the app (Vite will read from `.env.production` if it exists)
+    RUN npm run build
+    
+    
+    # ---------- Production Stage ----------
+    FROM nginx:stable-alpine
+    
+    # Copy built frontend to Nginx public folder
+    COPY --from=builder /app/dist /usr/share/nginx/html
+    
+    # (Optional) custom nginx config if needed
+    # COPY nginx.conf /etc/nginx/nginx.conf
+    
+    EXPOSE 80
+    
+    CMD ["nginx", "-g", "daemon off;"]
+    
