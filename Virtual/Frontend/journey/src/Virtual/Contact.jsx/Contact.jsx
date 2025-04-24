@@ -25,7 +25,8 @@ import { SiGmail } from 'react-icons/si';
 import axios from 'axios';
 import './Contact.css';
 
-const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/feedback/`;
+const API_URL = "https://sanifu.onrender.com/api/feedback/";
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
