@@ -18,7 +18,7 @@ html, body {
   /* This class will make sure the main content area grows to fill available space */
   .main-content {
     flex: 1;
-    padding: 2rem;  /* Adjust padding as needed */
+    /* padding: -1rem;  Adjust padding as needed */
     background-color: #1e293b; /* Set your background color for the content */
   }
   

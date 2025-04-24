@@ -57,7 +57,7 @@ const NavBar = () => {
           backdropFilter: isScrolled ? 'blur(10px)' : 'none',
           transition: 'all 0.3s ease',
           boxShadow: isScrolled ? '0 2px 10px rgba(0,0,0,0.2)' : 'none',
-          height: isScrolled ? '70px' : '90px',
+          height: isScrolled ? '100px' : '100px',
           zIndex: 1050
         }}
       >
@@ -78,7 +78,7 @@ const NavBar = () => {
               src={LogoImage}
               alt="Logo"
               style={{
-                height: isScrolled ? '50px' : '70px',
+                height: isScrolled ? '70px' : '70px',
                 width: 'auto',
                 borderRadius: '6px',
                 transition: 'height 0.3s ease-in-out'

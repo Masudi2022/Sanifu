@@ -317,7 +317,7 @@ const Contact = () => {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
-                onClick={() => window.open('mailto:your.email@example.com')}
+                onClick={() => window.open('masudsalum@sanifutech.com')}
               >
                 <div style={{
                   width: '80px',
@@ -355,7 +355,7 @@ const Contact = () => {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
-                onClick={() => window.open('https://www.linkedin.com/in/your-profile/')}
+                onClick={() => window.open('https://www.linkedin.com/in/Masudi Salum/')}
               >
                 <div style={{
                   width: '80px',
@@ -393,7 +393,7 @@ const Contact = () => {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
-                onClick={() => window.open('https://github.com/your-profile')}
+                onClick={() => window.open('https://github.com/Masudi2022/')}
               >
                 <div style={{
                   width: '80px',
