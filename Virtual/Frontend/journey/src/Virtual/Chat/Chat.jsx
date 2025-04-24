@@ -195,7 +195,7 @@ function Chat() {
           <h1 className="chat-title" style={{
             fontSize: '2.8rem',
             fontWeight: '800',
-            marginBottom: '1rem',
+            // marginBottom: '1rem',
             background: 'linear-gradient(90deg, #00f5d4, #00bbf9)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -203,15 +203,6 @@ function Chat() {
           }}>
             Chat With Masud
           </h1>
-          <p className="chat-subtitle" style={{ 
-            fontSize: '1.2rem', 
-            color: '#94a3b8', 
-            lineHeight: '1.6',
-            maxWidth: '700px',
-            margin: '0 auto'
-          }}>
-            Ask me anything about my professional background, projects, and expertise!
-          </p>
         </motion.div>
 
         <div style={{ 
@@ -226,8 +217,8 @@ function Chat() {
             transition={{ duration: 0.4 }}
             style={{ 
               width: isMobile ? '100%' : '80%',
-              height: isMobile ? '60vh' : '65vh',
-              minHeight: isMobile ? '400px' : '500px'
+              height: isMobile ? '60vh' : '80vh',
+              minHeight: isMobile ? '200px' : '500px'
             }}
           >
             <Card style={{
@@ -548,8 +539,9 @@ function Chat() {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              marginBottom: '1rem'
+              gap: '50px',
+              marginBottom: '1rem',
+              marginTop: '5rem'
             }}>
               <FaLightbulb style={{ 
                 color: '#00f5d4',
