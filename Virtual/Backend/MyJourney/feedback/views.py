@@ -1,9 +1,10 @@
-# views.py
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Feedback
 from .serializers import FeedbackSerializer
+from django.core.mail import send_mail
+from django.conf import settings
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def feedback_api(request, pk=None):
@@ -26,8 +27,32 @@ def feedback_api(request, pk=None):
     elif request.method == 'POST':
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            feedback = serializer.save()
+
+            # AFTER saving feedback, SEND EMAIL
+            admin_email = getattr(settings, 'ADMIN_EMAIL', None)
+            if admin_email:
+                try:
+                    send_mail(
+                        subject="📬 New Feedback Received",
+                        message=f"New feedback submitted:\n\nEmail: {feedback.email}\nRating: {feedback.rating}\nMessage:\n{feedback.message}",
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        recipient_list=[admin_email],
+                        fail_silently=False,
+                        html_message=f"""
+                            <h2>New Feedback Received</h2>
+                            <p><strong>Email:</strong> {feedback.email}</p>
+                            <p><strong>Rating:</strong> {feedback.rating}</p>
+                            <p><strong>Message:</strong><br>{feedback.message}</p>
+                        """
+                    )
+                except Exception as e:
+                    print(f"[ERROR] Failed to send feedback email: {e}")
+            else:
+                print("[WARNING] ADMIN_EMAIL not set in settings. Cannot send feedback notification.")
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # PUT (update feedback)
