@@ -23,9 +23,6 @@ CORS_ALLOWED_ORIGINS = os.environ.get('DJANGO_CORS_ALLOWED', '').split(',')
 
 
 
-print("DEBUG:", DEBUG)
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
-print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
 
 
 
