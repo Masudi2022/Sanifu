@@ -8,13 +8,11 @@ from .serializers import FeedbackSerializer
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def feedback_api(request, pk=None):
-    # GET all feedbacks
     if request.method == 'GET' and not pk:
         feedbacks = Feedback.objects.all().order_by('-submitted_at')
         serializer = FeedbackSerializer(feedbacks, many=True)
         return Response(serializer.data)
 
-    # GET single feedback
     elif request.method == 'GET' and pk:
         try:
             feedback = Feedback.objects.get(pk=pk)
@@ -23,19 +21,17 @@ def feedback_api(request, pk=None):
         except Feedback.DoesNotExist:
             return Response({"error": "Feedback not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    # POST (create new feedback)
     elif request.method == 'POST':
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            # Save feedback to database
             feedback = serializer.save()
 
-            # Send email notification
+            # send email
             send_mail(
                 subject='New Feedback Received',
                 message=f'You have received a new feedback:\n\n'
-                        f'Name: {feedback.name}\n'
                         f'Email: {feedback.email}\n'
+                        f'Rating: {feedback.rating}\n'
                         f'Message: {feedback.message}\n'
                         f'Submitted at: {feedback.submitted_at}',
                 from_email=settings.DEFAULT_FROM_EMAIL,
@@ -46,7 +42,6 @@ def feedback_api(request, pk=None):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # PUT (update feedback)
     elif request.method == 'PUT' and pk:
         try:
             feedback = Feedback.objects.get(pk=pk)
@@ -59,7 +54,6 @@ def feedback_api(request, pk=None):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # DELETE feedback
     elif request.method == 'DELETE' and pk:
         try:
             feedback = Feedback.objects.get(pk=pk)
@@ -68,5 +62,4 @@ def feedback_api(request, pk=None):
         except Feedback.DoesNotExist:
             return Response({"error": "Feedback not found"}, status=status.HTTP_404_NOT_FOUND)
 
-    # If none of the methods match
     return Response({"error": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
