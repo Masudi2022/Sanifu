@@ -27,19 +27,19 @@ def feedback_api(request, pk=None):
     elif request.method == 'POST':
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            # Save the feedback to the database
+            # Save feedback to database
             feedback = serializer.save()
 
-            # Send an email with the feedback details
+            # Send email notification
             send_mail(
-                'New Feedback Received',  # Email subject
-                f'You have received a new feedback:\n\n'
-                f'Name: {feedback.name}\n'
-                f'Email: {feedback.email}\n'
-                f'Message: {feedback.message}\n'
-                f'Submitted at: {feedback.submitted_at}',  # Email message
-                settings.DEFAULT_FROM_EMAIL,  # From email
-                ['salummasud54@gmail.com'],  # Your email where feedback is sent
+                subject='New Feedback Received',
+                message=f'You have received a new feedback:\n\n'
+                        f'Name: {feedback.name}\n'
+                        f'Email: {feedback.email}\n'
+                        f'Message: {feedback.message}\n'
+                        f'Submitted at: {feedback.submitted_at}',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=['salummasud54@gmail.com'],
                 fail_silently=False,
             )
 
@@ -52,6 +52,7 @@ def feedback_api(request, pk=None):
             feedback = Feedback.objects.get(pk=pk)
         except Feedback.DoesNotExist:
             return Response({"error": "Feedback not found"}, status=status.HTTP_404_NOT_FOUND)
+
         serializer = FeedbackSerializer(feedback, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -67,4 +68,5 @@ def feedback_api(request, pk=None):
         except Feedback.DoesNotExist:
             return Response({"error": "Feedback not found"}, status=status.HTTP_404_NOT_FOUND)
 
+    # If none of the methods match
     return Response({"error": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)

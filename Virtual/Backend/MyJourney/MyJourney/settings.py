@@ -125,13 +125,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'salummasud54@gmail.com'
-EMAIL_HOST_PASSWORD = 'zyvy wpfi bnhm vhmb'  # Your 16-character app password
+EMAIL_HOST_PASSWORD = 'zyvy wpfi bnhm vhmb'  # Your app password
 DEFAULT_FROM_EMAIL = 'salummasud54@gmail.com'
+
 
 
 
