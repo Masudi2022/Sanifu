@@ -25,7 +25,7 @@ import { SiGmail } from 'react-icons/si';
 import axios from 'axios';
 import './Contact.css';
 
-const API_URL = "https://sanifu.onrender.com/api/feedback/";
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/feedback/`;
 
 
 const Contact = () => {
@@ -52,7 +52,7 @@ const Contact = () => {
     setStatus({ loading: true, success: false, error: null });
 
     try {
-      await axios.post(API_ENDPOINT, formData);
+      await axios.post(API_URL, formData);
       setStatus({ loading: false, success: true, error: null });
       setFormData({ 
         email: '',
