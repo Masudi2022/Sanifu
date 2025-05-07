@@ -140,24 +140,6 @@ const ExtraCurricular = () => {
                     }}>
                       {activity.description}
                     </p>
-                    
-                    <div className="mt-auto">
-                      <h6 style={{
-                        color: '#94a3b8',
-                        fontSize: '0.9rem',
-                        marginBottom: '0.75rem',
-                        fontWeight: '600'
-                      }}>
-                        Key Achievements:
-                      </h6>
-                      <ul style={{
-                        paddingLeft: '1.25rem',
-                        marginBottom: 0,
-                        color: '#cbd5e1',
-                        fontSize: '0.9rem'
-                      }}
-                      </ul>
-                    </div>
                   </Card.Body>
                 </Card>
               </motion.div>
