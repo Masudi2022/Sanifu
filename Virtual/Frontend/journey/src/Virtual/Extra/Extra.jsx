@@ -32,11 +32,6 @@ const ExtraCurricular = () => {
       description: 'Actively involved in tech clubs, college fests, and volunteered in campus development programs.',
       icon: <FaUsers size={24} />,
       color: '#8b5cf6',
-      achievements: [
-        'Tech club president for 2 years',
-        'Lead organizer of annual tech fest',
-        '100+ hours of community service'
-      ]
     },
   ];
 
@@ -160,12 +155,7 @@ const ExtraCurricular = () => {
                         marginBottom: 0,
                         color: '#cbd5e1',
                         fontSize: '0.9rem'
-                      }}>
-                        {activity.achievements.map((achievement, i) => (
-                          <li key={i} style={{ marginBottom: '0.5rem' }}>
-                            {achievement}
-                          </li>
-                        ))}
+                      }}
                       </ul>
                     </div>
                   </Card.Body>
